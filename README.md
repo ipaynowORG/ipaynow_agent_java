@@ -47,9 +47,9 @@
 
 <h4 id='1.2'> 1.2 如何获取 </h4>
 
-[获取源码](https://github.com/ipaynowORG/ipaynow_pay_java)
+[获取源码](https://github.com/ipaynowORG/ipaynow_agent_java)
 
-[demo源码](https://github.com/ipaynowORG/ipaynow_pay_java)
+[demo源码](https://github.com/ipaynowORG/ipaynow_agent_java)
 
 Maven坐标如下
 
@@ -227,6 +227,17 @@ Maven坐标如下
         //报文数据字符串
         String reportContent = reportBuilder.toString();
 
+结果通知现在支付请求数据示例：
+    {“data”:{“transType”:”PAY”,”chTransId”:”200003201703221910181130275”,”mhtOrderAmt”:”1”,”responseCode”:”A001”,”responseMsg”:”成功”,”responseTime”:”20170322191042”,
+    ”transStatus”:”SUCCESSED”，“mhtOrderNo”:”20170322191017s”},
+    ”sign_r”:”48f9a9554a3914e5d39489a3e626bd2d9b687455a1683631f5a64c5a0fed9af9”,sign_s:”152a310c0dac28c624783a9090ddd8717718c12629dbf0224c1a1170b03beaf4”,”sign_v”:”28”}
+
+结果通知商户响应数据示例：
+    {“success”:”Y”}
+
+    若商户未成功响应现在支付发出的通知，现在支付会重新通知商户，规则如下：
+    1.前5分钟，每分钟通知一次，累计5次
+    2.5分钟后，每5分钟通知一次，累计5次
 
 字段含义如下:
 
@@ -234,133 +245,66 @@ Maven坐标如下
         <tr>
             <th>字段名称</th>
             <th>字段Key</th>
+            <th>格式</th>
+            <th>必填</th>
             <th>备注</th>
         </tr>
         <tr>
-            <td>功能码</td>
-            <td>funcode</td>
-            <td>定值：N001</td>
+            <td>商户请求流水号</td>
+            <td>mhtOrderNo</td>
+            <td>String (1,40)</td>
+            <td>Y</td>
+            <td>同输入</td>
         </tr>
         <tr>
-            <td>接口版本号</td>
-            <td>version</td>
-            <td>定值：1.0.0</td>
-         </tr>
-<tr>
-            <td>商户应用唯一标识</td>
-            <td>appId</td>
-            <td></td>
-         </tr>
-<tr>
-            <td>商户订单号</td>
-            <td>mhtOrderNo</td>
-            <td></td>
-         </tr>
-<tr>
-            <td>商户商品名称</td>
-            <td>mhtOrderName</td>
-            <td></td>
-         </tr>
-<tr>
-            <td>商户交易类型</td>
-            <td>mhtOrderType</td>
-            <td></td>
-         </tr>
-<tr>
-            <td>商户订单币种类型</td>
-            <td>mhtCurrencyType</td>
-            <td>156人民币</td>
-         </tr>
-<tr>
-            <td>商户订单原单金额</td>
-            <td>oriMhtOrderAmt</td>
-            <td>单位(人民币)：分</td>
-         </tr>
-<tr>
-            <td>商户订单实付金额</td>
-            <td>mhtOrderAmt</td>
-            <td>单位(人民币)：分</td>
-         </tr>
-<tr>
-            <td>商户订单优惠金额</td>
-            <td>discountAmt</td>
-            <td>单位(人民币)：分</td>
-         </tr>
-<tr>
-            <td>商户订单超时时间</td>
-            <td>mhtOrderTimeOut</td>
-            <td>60~3600秒，默认3600</td>
-         </tr>
-<tr>
-            <td>商户订单开始时间</td>
-            <td>mhtOrderStartTime</td>
-            <td>yyyyMMddHHmmss</td>
-         </tr>
-<tr>
-            <td>支付成功时间</td>
-            <td>payTime</td>
-            <td>yyyyMMddHHmmss</td>
-         </tr>
-<tr>
-            <td>商户字符编码</td>
-            <td>mhtCharset</td>
-            <td>UTF-8</td>
-         </tr>
-<tr>
             <td>现在支付流水号</td>
-            <td>nowPayOrderNo</td>
+            <td>chTransId</td>
+            <td>String(1,60)</td>
+            <td>N</td>
             <td></td>
-         </tr>
-<tr>
-            <td>设备类型</td>
-            <td>deviceType</td>
-            <td></td>
-         </tr>
-<tr>
-            <td>用户所选渠道类型</td>
-            <td>payChannelType</td>
-            <td></td>
-         </tr>
-<tr>
-            <td>交易支付状态</td>
+        </tr>
+        <tr>
+            <td>交易类型</td>
+            <td>transType</td>
+            <td>String(1,60)</td>
+            <td>N</td>
+            <td>AGENT_PAY: 代付 。AGENT_RECEIVE：代收</td>
+        </tr>
+        <tr>
+            <td>响应码</td>
+            <td>responseCode</td>
+            <td>String(4)</td>
+            <td>Y</td>
+            <td>见文档附录</td>
+        </tr>
+        <tr>
+            <td>响应信息</td>
+            <td>responseMsg</td>
+            <td>String(1,100)</td>
+            <td>Y</td>
+            <td>相应信息</td>
+        </tr>
+        <tr>
+            <td>响应时间</td>
+            <td>responseTime</td>
+            <td>String(14)</td>
+            <td>Y</td>
+            <td>yyyyMMddHHmmss</td>
+        </tr>
+        <tr>
+            <td>交易金额</td>
+            <td>mhtOrderAmt</td>
+            <td>Number(22)</td>
+            <td>N</td>
+            <td>单位:分</td>
+        </tr>
+        <tr>
+            <td>交易状态</td>
             <td>transStatus</td>
-            <td></td>
-         </tr>
-<tr>
-            <td>渠道订单号</td>
-            <td>channelOrderNo</td>
-            <td></td>
-         </tr>
-<tr>
-            <td>付款人账号</td>
-            <td>payConsumerId</td>
-            <td>微信返回sub_openid,支付宝返回buyer_user_id</td>
-         </tr>
-<tr>
-            <td>商户保留域</td>
-            <td>mhtReserved</td>
-            <td>给商户使用的字段，商户可以对交易进行标记，现在支付将原样返回</td>
-         </tr>
-<tr>
-            <td>签名方法</td>
-            <td>signType</td>
-            <td>定值：MD5</td>
-         </tr>
-<tr>
-            <td>数据签名</td>
-            <td>signature</td>
-            <td>除signature字段外，所有参数都参与MD5签名</td>
-         </tr>
-<tr>
-            <td>银行类型</td>
-            <td>bankType</td>
-            <td>微信渠道返回</td>
-         </tr>
-<tr>
-            <td>卡类型</td>
-            <td>cardType</td>
-            <td>CREDIT 信用卡  DEBIT  借记卡</td>
-         </tr>
+            <td>String(4)</td>
+            <td>N</td>
+            <td>SUCCESSED,成功。FAILED,失败。PROCESSING,处理中。</td>
+        </tr>
     </table>
 
 <h4 id='2.3'> 2.3 订单查询API </h4>
