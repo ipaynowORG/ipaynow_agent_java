@@ -317,24 +317,24 @@ Maven坐标如下
 
 - 验证签名
 
-    public static boolean verify(String data, String pub) {
-            try {
-                ObjectMapper mapper = new ObjectMapper();
-                Map<String, Object> map = mapper.readValue(data, Map.class);
-                BigInteger r = new BigInteger(map.get("sign_r").toString(), 16);
-                BigInteger s = new BigInteger(map.get("sign_s").toString(), 16);
-                int v = Integer.parseInt(map.get("sign_v").toString());
-                String param = StringTools.postFormLinkReport((Map) map.get("data"));
-    ECKey.ECDSASignature sig =
-    ECKey.ECDSASignature.fromComponents(r.toByteArray(), s.toByteArray(),
-                        (byte) v);
-                ECKey key = ECKey.fromPublicOnly(Hex.decode(pub));
-                return key.verify(HashUtil.sha3(param.getBytes("UTF-8")), sig);
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-            return false;
-    }
+        public static boolean verify(String data, String pub) {
+                try {
+                    ObjectMapper mapper = new ObjectMapper();
+                    Map<String, Object> map = mapper.readValue(data, Map.class);
+                    BigInteger r = new BigInteger(map.get("sign_r").toString(), 16);
+                    BigInteger s = new BigInteger(map.get("sign_s").toString(), 16);
+                    int v = Integer.parseInt(map.get("sign_v").toString());
+                    String param = StringTools.postFormLinkReport((Map) map.get("data"));
+        ECKey.ECDSASignature sig =
+        ECKey.ECDSASignature.fromComponents(r.toByteArray(), s.toByteArray(),
+                            (byte) v);
+                    ECKey key = ECKey.fromPublicOnly(Hex.decode(pub));
+                    return key.verify(HashUtil.sha3(param.getBytes("UTF-8")), sig);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                return false;
+        }
 
 <h2 id='3'> 3. 生成公私钥方法 </h2>
 
