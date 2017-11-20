@@ -34,7 +34,7 @@
 
 &nbsp;&nbsp;&nbsp;&nbsp;[2.2 支付结果通知](#2.2)
 
-[3. 完整DEMO](#3)
+[3. 生成公私钥方法](#3)
 
 [4. 完整DEMO](#4)
 
@@ -317,8 +317,12 @@ Maven坐标如下
 
 
 
-<h2 id='3'> 3. 完整DEMO </h2>
+<h2 id='3'> 3. 生成公私钥方法 </h2>
 
-            直接运行cn.ipaynow.ipaynow_pay_demo.Main
-            访问
-            http://127.0.0.1:7072/paytest/index.html
+为了保证信息的安全性，公私钥信息为商户侧生成；生成完毕后，需将公钥信息给予现在支付侧；同时需记录现在支付给商户侧的公钥信息，以便双方进行数据解密。
+
+    生成方法：
+
+    ECKey key = new ECKey();
+            System.out.println("PrivKey\t: " + Hex.toHexString(key.getPrivKeyBytes()));
+            System.out.println("Pubkey\t: " + Hex.toHexString(key.getPubKey()));
