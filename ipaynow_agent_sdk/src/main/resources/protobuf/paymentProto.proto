@@ -1,0 +1,46 @@
+syntax = "proto3";
+
+enum InvokeMode {
+    SYNC = 0;
+    ASYNC = 1;
+}
+
+enum Status {
+    PROCESSING = 0;
+    SUCCESSED = 1;
+    FAILED = 2;
+    ACCEPTED = 3;
+}
+
+enum PayInvokeMethod {
+    PAY_REQUEST_METHOD = 0;
+    QUERY_METHOD = 1;
+}
+
+message PayInvoke {
+    PayInvokeMethod method = 1;
+    bytes params = 2;
+}
+
+message PayRequestParams {
+    string transId = 1;
+    uint64 amount = 2;
+    string mhtField = 3;
+    string router = 4;
+    InvokeMode mode = 5;
+    string channelType = 6;
+}
+
+message QueryDetailParams {
+    string appId = 1;
+    string transId = 2;
+    string router = 3;
+}
+
+message QueryAgentPayRefundParams {
+    string appId = 1;
+    string transId = 2;
+    uint64 nowPage = 3;
+    uint64 pageSize = 4;
+    string refundDate = 5;
+}

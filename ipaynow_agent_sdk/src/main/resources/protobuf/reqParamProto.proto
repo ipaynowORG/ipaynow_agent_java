@@ -1,0 +1,22 @@
+syntax = "proto3";
+
+import "transactionProto.proto";
+
+enum METHOD {
+     PAY = 0;
+     RECEIVE = 1;
+     QUERY_TRANS = 2;
+     QUERY_BALANCE = 3;
+     TRANS = 4 ;
+     QUERY_TRANS_DETAIL = 5;
+     QUERY_BALANCE_V1 = 6;
+     AGENT_PAY_REFUND_QUERY = 7;
+     AGENT_PAY_REFUND_BATCH_QUERY = 8;
+
+}
+
+message Param {
+    METHOD method = 1;
+    SignedTransaction sign = 2;
+}
+

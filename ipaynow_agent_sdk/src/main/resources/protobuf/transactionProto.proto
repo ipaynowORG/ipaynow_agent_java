@@ -1,0 +1,25 @@
+syntax = "proto3";
+
+enum Crypto {
+     SECP = 0;
+     SM2 = 1;
+}
+
+message Transaction {
+    string from = 1;
+    string to = 2;
+    bytes content = 3;
+}
+
+message Content {
+    string nonce = 1;
+    uint64 gas = 2;
+    uint64 value = 3;
+    bytes data = 4;
+}
+
+message SignedTransaction {
+    bytes transaction = 1;
+    bytes signature = 2;
+    Crypto crypto = 3;
+}
