@@ -14,6 +14,8 @@
 
 &nbsp;&nbsp;&nbsp;&nbsp;[1.2 如何获取](#1.2)
 
+&nbsp;&nbsp;&nbsp;&nbsp;[1.3 接口地址](#1.3)
+
 [2. API](#2)
 
 &nbsp;&nbsp;&nbsp;&nbsp;[2.1 代收付API](#2.1)
@@ -59,7 +61,11 @@ Maven坐标如下
            <version>1.0.0</version>
 	</dependency>
 
+<h4 id='1.3'> 1.3 接口地址 </h4>
 
+    测试接口url: http://bc-test.ipaynow.cn/gateway
+
+    正式接口url: https://bc-pay.ipaynow.cn/gateway
 
 
 
