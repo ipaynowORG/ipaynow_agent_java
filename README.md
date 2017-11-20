@@ -227,13 +227,13 @@ Maven坐标如下
         //报文数据字符串
         String reportContent = reportBuilder.toString();
 
-结果通知现在支付请求数据示例：
-    {“data”:{“transType”:”PAY”,”chTransId”:”200003201703221910181130275”,”mhtOrderAmt”:”1”,”responseCode”:”A001”,”responseMsg”:”成功”,”responseTime”:”20170322191042”,
-    ”transStatus”:”SUCCESSED”，“mhtOrderNo”:”20170322191017s”},
-    ”sign_r”:”48f9a9554a3914e5d39489a3e626bd2d9b687455a1683631f5a64c5a0fed9af9”,sign_s:”152a310c0dac28c624783a9090ddd8717718c12629dbf0224c1a1170b03beaf4”,”sign_v”:”28”}
+    结果通知现在支付请求数据示例：
+        {“data”:{“transType”:”PAY”,”chTransId”:”200003201703221910181130275”,”mhtOrderAmt”:”1”,”responseCode”:”A001”,”responseMsg”:”成功”,”responseTime”:”20170322191042”,
+        ”transStatus”:”SUCCESSED”，“mhtOrderNo”:”20170322191017s”},
+        ”sign_r”:”48f9a9554a3914e5d39489a3e626bd2d9b687455a1683631f5a64c5a0fed9af9”,sign_s:”152a310c0dac28c624783a9090ddd8717718c12629dbf0224c1a1170b03beaf4”,”sign_v”:”28”}
 
-结果通知商户响应数据示例：
-    {“success”:”Y”}
+    结果通知商户响应数据示例：
+        {“success”:”Y”}
 
     若商户未成功响应现在支付发出的通知，现在支付会重新通知商户，规则如下：
     1.前5分钟，每分钟通知一次，累计5次
